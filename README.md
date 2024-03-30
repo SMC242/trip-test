@@ -22,7 +22,7 @@ See https://github.com/SMC242/trip-test/issues for the stories translated to fea
 
 ## Figma
 
-The Figma designs can be found [here]()
+The Figma designs can be found [here](https://www.figma.com/file/fVAbl3D60KyFosFQS20Glc/Untitled?type=design&node-id=0%3A1&mode=design&t=i4WIygBYycY9kXdn-1)
 
 # Overview
 
