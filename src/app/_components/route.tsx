@@ -3,10 +3,11 @@ import toast from "react-hot-toast";
 import { BarLoader } from "react-spinners";
 
 import colours from "@/utils/colours";
-import Stop from "./stop";
+import Stop, { type StopVariant } from "./stop";
 import useRoute from "../_hooks/useRoute";
 import Path from "./path";
 import ErrorMessage from "./errorMessage";
+import { type TripT } from "@/models/trip";
 
 type LatLon = { lat: number; lon: number };
 
@@ -16,7 +17,7 @@ type RouteProps = {
   /**
    * The stops along the route
    */
-  route: Array<{ location: LatLon; id: number }>;
+  route: Array<TripT["route"][number]>;
 };
 
 /**
@@ -33,10 +34,21 @@ export default function Route({ origin, dest, route }: RouteProps) {
   return (
     <>
       {route.map((stop) => {
+        // Mark already visited stops
+        // The arrival and departure times seem inconsistent, so I had to drop this feature.
+        // Sometimes the arrival time is defined but the next one isn't, and then the next one is
+
+        // const variant: StopVariant =
+        //   stop.arrival.actual !== undefined &&
+        //   stop.departure.actual !== undefined
+        //     ? "previous-stop"
+        //     : "default";
+        const variant: StopVariant = "default";
+
         return (
           <Stop
             key={stop.id}
-            variant="default"
+            variant={variant}
             coordinates={[stop.location.lat, stop.location.lon]}
           />
         );

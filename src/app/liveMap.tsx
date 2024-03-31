@@ -39,13 +39,7 @@ export default function LiveMap({ initialTrip, quote }: LiveMapProps) {
     currentLocation.latitude,
     currentLocation.longitude,
   ];
-  const stops = initialTrip.route.map((stop) => ({
-    location: {
-      lat: stop.location.lat,
-      lon: stop.location.lon,
-    },
-    id: stop.id,
-  }));
+
   return (
     // The height has to be static for Leaflet to render correctly
     <div className="w-full h-40 sm:h-96">
@@ -56,7 +50,7 @@ export default function LiveMap({ initialTrip, quote }: LiveMapProps) {
         scrollWheelZoom={true}
       >
         <Bus coordinates={currentCoords} />
-        <Route origin={origin} dest={dest} route={stops} />
+        <Route origin={origin} dest={dest} route={initialTrip.route} />
       </Map>
     </div>
   );
