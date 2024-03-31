@@ -1,6 +1,6 @@
 import type { Config } from "tailwindcss";
 
-const config: Config = {
+const config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -13,11 +13,11 @@ const config: Config = {
         "brand-primary": "#3f907c",
         "brand-secondary": "#82b0a3",
         "brand-tertiary": "#cbd7d3",
-        "brand-disabled": "#496A61", // Darkened version of brand-primary
-        "brand-enabled": "#8FC5B5", // Lightened version of brand-secondary
+        "brand-disabled": "#496A61",
+        "brand-enabled": "#8FC5B5",
       },
     },
   },
   plugins: [],
-};
+} satisfies Config;
 export default config;
