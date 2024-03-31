@@ -75,6 +75,11 @@ See https://github.com/SMC242/trip-test/issues for the stories translated to fea
 
 The Figma designs can be found [here](https://www.figma.com/file/fVAbl3D60KyFosFQS20Glc/Untitled?type=design&node-id=0%3A1&mode=design&t=i4WIygBYycY9kXdn-1)
 
+Notes:
+
+- The "your trip" section was dropped during development as it was a "would like to have" feature
+  - Having this feature would aid people in identifying their stop by name instead of just location
+
 # Running
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
