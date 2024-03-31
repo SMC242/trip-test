@@ -15,6 +15,7 @@ const config = {
         "brand-tertiary": "#cbd7d3",
         "brand-disabled": "#496A61",
         "brand-enabled": "#8FC5B5",
+        "brand-red": "#D3455A",
       },
     },
   },
