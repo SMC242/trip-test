@@ -13,6 +13,8 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "./_components/ui/accordion";
+import dynamic from "next/dynamic";
+import { BarLoader } from "react-spinners";
 
 const ORIGIN = 13;
 const DESTINATION = 42;
@@ -75,6 +77,11 @@ function TripInfoAccordion({ trip }: { trip: TripT }) {
   );
 }
 
+const DynamicMap = dynamic(async () => await import("./liveMap"), {
+  ssr: false,
+  loading: () => <p>Loading map...</p>,
+});
+
 export default async function Home() {
   const trip = await findTrip();
 
@@ -89,7 +96,7 @@ export default async function Home() {
       )}
       {trip !== undefined && (
         <>
-          <LiveMap initialTrip={trip.trip} quote={trip.quote} />
+          <DynamicMap initialTrip={trip.trip} quote={trip.quote} />
           <TripInfoAccordion trip={trip.trip} />
         </>
       )}

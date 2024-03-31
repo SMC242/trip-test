@@ -2,8 +2,7 @@
 import React from "react";
 
 import Bus from "./_components/bus";
-import dynamic from "next/dynamic";
-import { defaultMap } from "@/app/_components/map";
+import Map, { defaultMap } from "@/app/_components/map";
 import { type TripT } from "@/models/trip";
 import { type QuotesT } from "@/models/quotes";
 import Route from "./_components/route";
@@ -23,10 +22,6 @@ type LiveMapProps = {
 export default function LiveMap({ initialTrip, quote }: LiveMapProps) {
   // Dynamically import the Map component to avoid loading it on the server.
   // Source: https://medium.com/@shubham3480/dynamic-imports-in-react-3e3e7ad1d210
-  const Map = dynamic(async () => await import("@/app/_components/map"), {
-    loading: () => <p>A map is loading</p>,
-    ssr: false,
-  });
 
   // Retrieve relevant coordinates from the trip and quote
   const origin = quote.legs[0].origin;
