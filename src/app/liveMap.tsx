@@ -28,8 +28,6 @@ export default function LiveMap({ initialTrip, quote }: LiveMapProps) {
     ssr: false,
   });
 
-  console.log(initialTrip);
-
   // Retrieve relevant coordinates from the trip and quote
   const origin = quote.legs[0].origin;
   const dest = quote.legs[0].destination;
