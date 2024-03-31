@@ -9,6 +9,7 @@ type MapProps = {
     attribution: string;
     url: string;
   };
+  children?: React.ReactNode;
 } & React.ComponentProps<typeof MapContainer>;
 
 // From https://react-leaflet.js.org/
@@ -18,11 +19,12 @@ export const defaultMap = {
   url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
 };
 
-export default function Map({ map, ...props }: MapProps) {
+export default function Map({ map, children, ...props }: MapProps) {
   console.log("rendering");
   return (
     <MapContainer {...props} className="h-full w-full">
       <TileLayer url={map.url} attribution={map.attribution} />
+      {children}
     </MapContainer>
   );
 }
