@@ -20,7 +20,6 @@ export const defaultMap = {
 };
 
 export default function Map({ map, children, ...props }: MapProps) {
-  console.log("rendering");
   return (
     <MapContainer {...props} className="h-full w-full">
       <TileLayer url={map.url} attribution={map.attribution} />
