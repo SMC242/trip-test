@@ -1,5 +1,8 @@
 "use client";
 import React from "react";
+import toast from "react-hot-toast";
+import { BarLoader } from "react-spinners";
+
 import Bus from "./_components/bus";
 import dynamic from "next/dynamic";
 import { defaultMap } from "@/app/_components/map";
@@ -7,6 +10,8 @@ import { type TripT } from "@/models/trip";
 import Stop from "./_components/stop";
 import { type QuotesT } from "@/models/quotes";
 import Path from "./_components/path";
+import useRoute from "./_hooks/useRoute";
+import colours from "@/utils/colours";
 
 type LiveMapProps = {
   initialTrip: TripT;
@@ -28,6 +33,7 @@ export default function LiveMap({ initialTrip, quote }: LiveMapProps) {
     ssr: false,
   });
 
+  // Retrieve relevant coordinates from the trip and quote
   const origin = quote.legs[0].origin;
   const dest = quote.legs[0].destination;
   const currentLocation = initialTrip.vehicle.gps;
@@ -35,6 +41,18 @@ export default function LiveMap({ initialTrip, quote }: LiveMapProps) {
     currentLocation.latitude,
     currentLocation.longitude,
   ];
+  const routeCoords: Array<[number, number]> = initialTrip.route.map((stop) => [
+    stop.location.lat,
+    stop.location.lon,
+  ]);
+  console.log(routeCoords);
+
+  const routeResult = useRoute({
+    points: routeCoords,
+    pollingIntervalMs: 3000,
+  });
+
+  if (routeResult.status === "error") toast.error("Could not calculate route");
 
   return (
     // The height has to be static for Leaflet to render correctly
@@ -57,12 +75,18 @@ export default function LiveMap({ initialTrip, quote }: LiveMapProps) {
           );
         })}
         <Stop variant="destination" coordinates={[dest.lat, dest.lon]} />
-        <Path
-          points={initialTrip.route.map(
-            (stop) => [stop.location.lat, stop.location.lon] as const
-          )}
-          weight={6}
-        />
+        <BarLoader loading={routeResult.status === "loading"} />
+        {routeResult.status === "success" && (
+          <Path
+            points={
+              routeResult.data.routes[0].geometry.coordinates as Array<
+                [number, number]
+              >
+            }
+            colour={colours["brand-primary"]}
+            weight={10}
+          />
+        )}
       </Map>
     </div>
   );
