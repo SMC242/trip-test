@@ -1,4 +1,4 @@
-import { Quotes, type Quotes as QuotesT } from "@/models/quotes";
+import { Quotes, type QuotesT } from "@/models/quotes";
 import env from "@/utils/env";
 import { query } from "@/utils/request";
 

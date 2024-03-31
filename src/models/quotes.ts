@@ -95,4 +95,4 @@ export const Quotes = z.object({
   min_card_transaction: z.number(),
 });
 
-export type Quotes = z.infer<typeof Quotes>;
+export type QuotesT = z.infer<typeof Quotes>;

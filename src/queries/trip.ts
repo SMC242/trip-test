@@ -1,4 +1,4 @@
-import { Trip, type Trip as TripT } from "@/models/trip";
+import { Trip, type TripT } from "@/models/trip";
 import env from "@/utils/env";
 import { query } from "@/utils/request";
 

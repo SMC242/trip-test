@@ -265,4 +265,4 @@ export const Trip = z.object({
   }),
 });
 
-export type Trip = z.infer<typeof Trip>;
+export type TripT = z.infer<typeof Trip>;
