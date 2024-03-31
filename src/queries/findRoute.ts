@@ -9,7 +9,6 @@ export async function findRoute(points: Array<[number, number]>) {
     .map((point) => point[1] + "," + point[0])
     .join(";");
   const url = `http://router.project-osrm.org/route/v1/driving/${pointsParam}?geometries=geojson&overview=full`;
-  console.log(url);
   const result = await query(url, {}, Route);
 
   // Flip the coordinates to [latitude, longitude]
