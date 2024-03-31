@@ -6,6 +6,13 @@ import { getTrip } from "@/queries/trip";
 import { type TripT } from "@/models/trip";
 import LiveMap from "./liveMap";
 import ErrorMessage from "./_components/errorMessage";
+import TripInfo from "./_components/tripInfo";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "./_components/ui/accordion";
 
 const ORIGIN = 13;
 const DESTINATION = 42;
@@ -55,13 +62,25 @@ async function findTrip(): Promise<
     : undefined;
 }
 
+function TripInfoAccordion({ trip }: { trip: TripT }) {
+  return (
+    <Accordion className="" type="single" collapsible>
+      <AccordionItem value="bus">
+        <AccordionTrigger>Bus Details</AccordionTrigger>
+        <AccordionContent>
+          <TripInfo trip={trip} />
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
+  );
+}
+
 export default async function Home() {
   const trip = await findTrip();
 
   return (
     <main className="m-2">
       <h1 className="text-4xl my-4 text-brand-primary">Your Journey</h1>
-      {/* TODO: centre on the trip */}
       {trip === undefined && (
         <ErrorMessage>
           No trip found. Please check your internet connection and refresh the
@@ -69,7 +88,10 @@ export default async function Home() {
         </ErrorMessage>
       )}
       {trip !== undefined && (
-        <LiveMap initialTrip={trip.trip} quote={trip.quote} />
+        <>
+          <LiveMap initialTrip={trip.trip} quote={trip.quote} />
+          <TripInfoAccordion trip={trip.trip} />
+        </>
       )}
     </main>
   );
