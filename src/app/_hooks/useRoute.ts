@@ -16,7 +16,7 @@ export type UseRouteResult =
     };
 
 /**
- * Find a road route through the given points. Polls the route every `pollingIntervalMs` milliseconds.
+ * Find a road route through the given points.
  */
 export default function useRoute({ points }: UseRouteOptions): UseRouteResult {
   const pathResult = useQuery({
