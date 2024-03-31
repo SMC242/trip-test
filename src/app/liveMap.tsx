@@ -36,16 +36,14 @@ export default function LiveMap({ initialTrip, quote }: LiveMapProps) {
   // Retrieve relevant coordinates from the trip and quote
   const origin = quote.legs[0].origin;
   const dest = quote.legs[0].destination;
-  const currentLocation = initialTrip.vehicle.gps;
-  const currentCoords: [number, number] = [
-    currentLocation.latitude,
-    currentLocation.longitude,
-  ];
+
+  // No access to the bus' real-time location, so use the origin as a placeholder
+  const currentCoords: [number, number] = [origin.lat, origin.lon];
+  console.log(currentCoords);
   const routeCoords: Array<[number, number]> = initialTrip.route.map((stop) => [
     stop.location.lat,
     stop.location.lon,
   ]);
-  console.log(routeCoords);
 
   const routeResult = useRoute({
     points: routeCoords,
@@ -63,7 +61,7 @@ export default function LiveMap({ initialTrip, quote }: LiveMapProps) {
         zoom={13}
         scrollWheelZoom={true}
       >
-        <Bus coordinates={currentCoords} />
+        <Bus coordinates={currentCoords} size={32} />
         <Stop variant="origin" coordinates={[origin.lat, origin.lon]} />
         {initialTrip.route.map((stop) => {
           return (
