@@ -6,6 +6,7 @@ import colours from "@/utils/colours";
 import Stop from "./stop";
 import useRoute from "../_hooks/useRoute";
 import Path from "./path";
+import ErrorMessage from "./errorMessage";
 
 type LatLon = { lat: number; lon: number };
 
@@ -26,7 +27,8 @@ export default function Route({ origin, dest, route }: RouteProps) {
     points: route.map((stop) => [stop.location.lat, stop.location.lon]),
   });
 
-  if (routeResult.status === "error") toast.error("Could not calculate route");
+  if (routeResult.status === "error" && routeResult.error !== "network-error")
+    toast.error("Could not calculate route");
 
   return (
     <>
@@ -44,6 +46,13 @@ export default function Route({ origin, dest, route }: RouteProps) {
       <Stop variant="destination" coordinates={[dest.lat, dest.lon]} />
 
       <BarLoader loading={routeResult.status === "loading"} />
+
+      {routeResult.status === "error" &&
+        routeResult.error === "network-error" && (
+          <ErrorMessage>
+            Failed to fetch route. Please check your connection and try again
+          </ErrorMessage>
+        )}
 
       {routeResult.status === "success" && (
         <Path

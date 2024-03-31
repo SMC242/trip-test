@@ -5,6 +5,7 @@ import { getQuotes } from "@/queries/quotes";
 import { getTrip } from "@/queries/trip";
 import { type TripT } from "@/models/trip";
 import LiveMap from "./liveMap";
+import ErrorMessage from "./_components/errorMessage";
 
 const ORIGIN = 13;
 const DESTINATION = 42;
@@ -62,10 +63,10 @@ export default async function Home() {
       <h1 className="text-4xl my-4 text-brand-primary">Your Journey</h1>
       {/* TODO: centre on the trip */}
       {trip === undefined && (
-        <div className="flex justify-center text-red-500">
+        <ErrorMessage>
           No trip found. Please check your internet connection and refresh the
           page to try again.
-        </div>
+        </ErrorMessage>
       )}
       {trip !== undefined && (
         <LiveMap initialTrip={trip.trip} quote={trip.quote} />
