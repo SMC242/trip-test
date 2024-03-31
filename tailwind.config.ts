@@ -8,10 +8,13 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      // Obtained from screenshot of Ember's logo
+      colors: {
+        "brand-primary": "#3f907c",
+        "brand-secondary": "#82b0a3",
+        "brand-tertiary": "#cbd7d3",
+        "brand-disabled": "#496A61", // Darkened version of brand-primary
+        "brand-enabled": "#8FC5B5", // Lightened version of brand-secondary
       },
     },
   },
