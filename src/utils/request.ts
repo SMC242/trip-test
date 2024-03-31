@@ -1,4 +1,4 @@
-import zod from "zod";
+import type zod from "zod";
 
 export type ResponseError =
   | "bad-request"
