@@ -2,7 +2,58 @@
 
 This is a page created for Ember's take-home project. It displays a bus' current position and provides helpful information about the bus and its journey.
 
-Completed in x hours and xx minutes on 30/03/2024 - 31/03/2024
+## Status
+
+Completed in 10 hours and 10 minutes on 30/03/2024 - 31/03/2024. The extra time used is due to spending lots of time on design - writing user stories, creating quality issues, and making a Figma prototype. While this does demonstrate my abilities across the development workflow, it was ambitious to spend so much time on formal design.
+
+Features:
+
+- Drawing the bus route with OSRM
+
+  - Extrapolates the road route using OSRM's fastest route engine based on the stops in the route
+  - Note that the route chosen is not the same as the real route as the parameters used by Ember are unavailable to me (the bus may appear off of the route due to this)
+
+- Interactive map using Leaflet
+- Server-side data-fetching using React server components
+- Information about the bus
+- Differentiates start and end point
+- Mobile-first design
+- Handles network errors gracefully
+
+### Tests
+
+As I was over time, I chose not to write unit tests. Here is what I would test:
+
+- <Route />
+    - Handles empty route
+    - Handles network error
+        - Mock no internet connection
+    - All stops render in the correct place
+    - Handles failure to extrapolate road route
+        - Should continue to render the points, but tell the user that the app is unable to render the route
+        - Test this with a reasonable set of points, no points, and an unreasonable set of points (around the world)
+    - Loader appears and disappears during and after query
+    - Check that points are correctly marked as visited
+        - This would fail with the current implementation
+- <Bus>
+    - Renders in the correct place
+- <Map>
+    - Should be able to zoom, pan
+    - Ensure tiles render correctly with snapshot testing
+- <LiveMap>
+    - Handles network error
+        - Load with no internet connection
+        - Load then cut off internet
+    - Input a quote with an invalid origin and destination
+        - E.G origin doesn't match route[0]
+    - Loads with the right centrepoint for the given bus position
+- Index page
+  - Handles query failures
+    - Trip query
+    - Quotes query
+    - Empty quotes list
+    - Invalid trip UID
+  - Correctly gets the right departure time range
 
 # Design
 
@@ -23,14 +74,6 @@ See https://github.com/SMC242/trip-test/issues for the stories translated to fea
 ## Figma
 
 The Figma designs can be found [here](https://www.figma.com/file/fVAbl3D60KyFosFQS20Glc/Untitled?type=design&node-id=0%3A1&mode=design&t=i4WIygBYycY9kXdn-1)
-
-# Overview
-
-## User story
-
-# Acceptance criteria
-
-# Related
 
 ## Next
 
