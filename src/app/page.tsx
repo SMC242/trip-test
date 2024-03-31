@@ -50,9 +50,8 @@ async function findTrip(): Promise<TripT | undefined> {
   return tripResult.status === "success" ? tripResult.data : undefined;
 }
 
-export default function Home() {
-  //   const trip = await findTrip();
-  //   console.log(trip ?? "failed");
+export default async function Home() {
+  const trip = await findTrip();
 
   // Dynamically import the Map component to avoid loading it on the server.
   // Source: https://medium.com/@shubham3480/dynamic-imports-in-react-3e3e7ad1d210
