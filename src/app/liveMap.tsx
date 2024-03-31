@@ -1,17 +1,12 @@
 "use client";
 import React from "react";
-import toast from "react-hot-toast";
-import { BarLoader } from "react-spinners";
 
 import Bus from "./_components/bus";
 import dynamic from "next/dynamic";
 import { defaultMap } from "@/app/_components/map";
 import { type TripT } from "@/models/trip";
-import Stop from "./_components/stop";
 import { type QuotesT } from "@/models/quotes";
-import Path from "./_components/path";
-import useRoute from "./_hooks/useRoute";
-import colours from "@/utils/colours";
+import Route from "./_components/route";
 
 type LiveMapProps = {
   initialTrip: TripT;
@@ -33,27 +28,26 @@ export default function LiveMap({ initialTrip, quote }: LiveMapProps) {
     ssr: false,
   });
 
+  console.log(initialTrip);
+
   // Retrieve relevant coordinates from the trip and quote
   const origin = quote.legs[0].origin;
   const dest = quote.legs[0].destination;
+
+  // Known issue: current location is not on the path drawn with OSRM.
+  // The route is generated using OSRM's fastest route API, which may not match the actual route
   const currentLocation = initialTrip.vehicle.gps;
   const currentCoords: [number, number] = [
     currentLocation.latitude,
     currentLocation.longitude,
   ];
-  const routeCoords: Array<[number, number]> = initialTrip.route.map((stop) => [
-    stop.location.lat,
-    stop.location.lon,
-  ]);
-  console.log(routeCoords);
-
-  const routeResult = useRoute({
-    points: routeCoords,
-    pollingIntervalMs: 3000,
-  });
-
-  if (routeResult.status === "error") toast.error("Could not calculate route");
-
+  const stops = initialTrip.route.map((stop) => ({
+    location: {
+      lat: stop.location.lat,
+      lon: stop.location.lon,
+    },
+    id: stop.id,
+  }));
   return (
     // The height has to be static for Leaflet to render correctly
     <div className="w-full h-40 sm:h-96">
@@ -64,29 +58,7 @@ export default function LiveMap({ initialTrip, quote }: LiveMapProps) {
         scrollWheelZoom={true}
       >
         <Bus coordinates={currentCoords} />
-        <Stop variant="origin" coordinates={[origin.lat, origin.lon]} />
-        {initialTrip.route.map((stop) => {
-          return (
-            <Stop
-              key={stop.id}
-              variant="default"
-              coordinates={[stop.location.lat, stop.location.lon]}
-            />
-          );
-        })}
-        <Stop variant="destination" coordinates={[dest.lat, dest.lon]} />
-        <BarLoader loading={routeResult.status === "loading"} />
-        {routeResult.status === "success" && (
-          <Path
-            points={
-              routeResult.data.routes[0].geometry.coordinates as Array<
-                [number, number]
-              >
-            }
-            colour={colours["brand-primary"]}
-            weight={10}
-          />
-        )}
+        <Route origin={origin} dest={dest} route={stops} />
       </Map>
     </div>
   );
