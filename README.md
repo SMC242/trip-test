@@ -10,8 +10,9 @@ Features:
 
 - Drawing the bus route with OSRM
 
-  - Extrapolates the road route using OSRM's fastest route engine based on the stops in the route
+  - Interpolates the road route using OSRM's fastest route engine based on the stops in the route
   - Note that the route chosen is not the same as the real route as the parameters used by Ember are unavailable to me (the bus may appear off of the route due to this)
+  - Additionally, the bus' position seems to update after the bus has visited all its stops
 
 - Interactive map using Leaflet
 - Server-side data-fetching using React server components
