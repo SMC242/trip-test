@@ -20,13 +20,14 @@ const ORIGIN = 13;
 const DESTINATION = 42;
 
 /**
- * Get the start and end of the current day in the user's timezone.
+ * Get a time range from now until the end of the day
  */
 function getDayRange() {
   // This is a bit more verbose in order to get the full date object
   const start = new Date();
-  start.setUTCHours(0, 0, 0, 0);
+  start.setDate(start.getDate());
   const end = new Date();
+  end.setDate(end.getDate());
   end.setUTCHours(23, 59, 59, 999);
 
   return {
@@ -55,11 +56,9 @@ async function findTrip(): Promise<
 
   const firstQuote = selectTrip(quotesResult?.data);
   if (firstQuote === undefined) return undefined;
-  // const tripUID = firstQuote.legs[0].trip_uid;
-  const tripUID = "WuGrFkZtD68AkKE8CN4JF6";
+  const tripUID = firstQuote.legs[0].trip_uid;
 
   const tripResult = await getTrip(tripUID);
-  console.log("trip", tripResult)
   return tripResult.status === "success"
     ? { trip: tripResult.data, quote: firstQuote }
     : undefined;
