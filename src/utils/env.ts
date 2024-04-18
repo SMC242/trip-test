@@ -2,7 +2,15 @@ import "dotenv/config";
 import zod from "zod";
 
 const Env = zod.object({
+  /**
+   * The base URL of the website
+   * @example http://localhost:3000
+   */
   BASE_URL: zod.string(),
+  /**
+   * The base URL for the Ember REST API
+   * @example https://api.ember.to/v1
+   */
   API_BASE_URL: zod.string(),
 });
 
