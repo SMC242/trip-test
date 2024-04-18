@@ -24,8 +24,9 @@ type RouteProps = {
  * Display the stops and road path of a route
  */
 export default function Route({ origin, dest, route }: RouteProps) {
+  const actualRoute = route.filter((stop) => stop.skipped === false);
   const routeResult = useRoute({
-    points: route.map((stop) => [stop.location.lat, stop.location.lon]),
+    points: actualRoute.map((stop) => [stop.location.lat, stop.location.lon]),
   });
 
   if (routeResult.status === "error" && routeResult.error !== "network-error")
@@ -34,16 +35,13 @@ export default function Route({ origin, dest, route }: RouteProps) {
   return (
     <>
       {route.map((stop) => {
-        // Mark already visited stops
-        // The arrival and departure times seem inconsistent, so I had to drop this feature.
-        // Sometimes the arrival time is defined but the next one isn't, and then the next one is
+        console.log(`Arrival for ${stop.id}`, stop.arrival);
+        console.log(`Departure for ${stop.id}`, stop.departure);
 
-        // const variant: StopVariant =
-        //   stop.arrival.actual !== undefined &&
-        //   stop.departure.actual !== undefined
-        //     ? "previous-stop"
-        //     : "default";
-        const variant: StopVariant = "default";
+        // Mark already visited and skipped stops
+        let variant: StopVariant = "default";
+        if (stop.skipped === true) variant = "skipped";
+        else if (stop.arrival.actual !== undefined) variant = "previous-stop";
 
         return (
           <Stop
