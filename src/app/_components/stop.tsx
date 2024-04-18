@@ -8,7 +8,8 @@ export type StopVariant =
   | "origin"
   | "destination"
   | "next-stop"
-  | "previous-stop";
+  | "previous-stop"
+  | "skipped";
 
 type StopProps = {
   coordinates: [number, number];
@@ -23,6 +24,7 @@ function getIconURL(variant: StopVariant) {
     destination: "destination-stop.svg",
     "next-stop": "next-stop.svg",
     "previous-stop": "previous-stop.svg",
+    skipped: "skipped-stop.svg",
     default: "default-stop.svg",
   };
 
