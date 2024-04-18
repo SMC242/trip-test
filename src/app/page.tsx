@@ -25,7 +25,9 @@ const DESTINATION = 42;
 function getDayRange() {
   // This is a bit more verbose in order to get the full date object
   const start = new Date();
-  start.setDate(start.getDate());
+  // NOTE: the "not authorised to see past trips" seems to happen
+  // when requesting trips more than 12 hours ago. Using -11 to be safe
+  start.setHours(start.getHours() - 11);
   const end = new Date();
   end.setDate(end.getDate());
   end.setUTCHours(23, 59, 59, 999);
