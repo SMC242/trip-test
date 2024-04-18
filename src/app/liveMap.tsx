@@ -20,15 +20,14 @@ type LiveMapProps = {
  * 2. It will manage real-time updates to the map and therefore needs to be stateful
  */
 export default function LiveMap({ initialTrip, quote }: LiveMapProps) {
-  // Dynamically import the Map component to avoid loading it on the server.
-  // Source: https://medium.com/@shubham3480/dynamic-imports-in-react-3e3e7ad1d210
-
   // Retrieve relevant coordinates from the trip and quote
   const origin = quote.legs[0].origin;
   const dest = quote.legs[0].destination;
 
   // Known issue: current location is not on the path drawn with OSRM.
-  // The route is generated using OSRM's fastest route API, which may not match the actual route
+  // The route is generated using OSRM's fastest route API, which may not match the actual route.
+  // Additionally, the bus' location seems to update even after all stops
+  // have been visited
   const currentLocation = initialTrip.vehicle.gps;
   const currentCoords: [number, number] = [
     currentLocation.latitude,

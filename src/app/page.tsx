@@ -79,6 +79,8 @@ function TripInfoAccordion({ trip }: { trip: TripT }) {
   );
 }
 
+// Dynamically import the Map component to avoid loading it on the server.
+// Source: https://medium.com/@shubham3480/dynamic-imports-in-react-3e3e7ad1d210
 const DynamicMap = dynamic(async () => await import("./liveMap"), {
   ssr: false,
   loading: () => <p>Loading map...</p>,
