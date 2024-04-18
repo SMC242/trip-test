@@ -25,10 +25,9 @@ const DESTINATION = 42;
 function getDayRange() {
   // This is a bit more verbose in order to get the full date object
   const start = new Date();
-  new Date().toUTCString();
-  start.setHours(0, 0, 0, 0);
+  start.setUTCHours(0, 0, 0, 0);
   const end = new Date();
-  end.setHours(23, 59, 59, 999);
+  end.setUTCHours(23, 59, 59, 999);
 
   return {
     start,
@@ -56,9 +55,11 @@ async function findTrip(): Promise<
 
   const firstQuote = selectTrip(quotesResult?.data);
   if (firstQuote === undefined) return undefined;
-  const tripUID = firstQuote.legs[0].trip_uid;
+  // const tripUID = firstQuote.legs[0].trip_uid;
+  const tripUID = "WuGrFkZtD68AkKE8CN4JF6";
 
   const tripResult = await getTrip(tripUID);
+  console.log("trip", tripResult)
   return tripResult.status === "success"
     ? { trip: tripResult.data, quote: firstQuote }
     : undefined;
